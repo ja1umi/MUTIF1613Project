@@ -1,0 +1,29 @@
+
+
+ Pin # | Name     | Pin Type
+-----------------------------
+   1   | nWR      | Clock/Input
+   2   | IOP      | Input
+   3   | A15      | Input
+   4   | A14      | Input
+   5   | A13      | Input
+   6   | A12      | Input
+   7   | A11      | Input
+   8   | A10      | Input
+   9   | A9       | Input
+  10   | A8       | Input
+  11   | A7       | Input
+  12   | GND      | GND
+  13   | A6       | Input
+  14   | A5       | Input
+  15   | A4       | Input
+  16   | A3       | Input
+  17   | A2       | Input
+  18   | A1       | Input
+  19   | nMBINT   | Output
+  20   | nCESHM   | Output
+  21   | nCEROM   | Output
+  22   | nCERAM   | Output
+  23   | nMBINTA  | Input
+  24   | VCC      | VCC
+

@@ -1,0 +1,31 @@
+GAL22V10
+adecode1613	; Address decoder
+
+nWR    IOP     A15     A14     A13    A12	 A11    A10    A9     A8     A7      GND
+A6     A5      A4      A3      A2     A1	 nMBINT	nCESHM nCEROM nCERAM nMBINTA VCC
+
+; Shared RAM : 0x?0000 - 0x?0FFF (?=0, 1, 2)
+;nCESHM = A15 + A14 + A13 + A12 + IOP
+/nCESHM = /A15 * /A14 * /A13 * /A12 * /IOP
+
+; ROM : 0x?F800 - 0x?FFFF (?=0, 1, 2)
+;nCEROM = /A15 + /A14 + /A13 + /A12 + /A11 + IOP
+/nCEROM = A15 * A14 * A13 * A12 * A11 * /IOP
+
+; RAM : 0x01000 - 0x0F7ff, 0x11000 - 0x1F7FF, 0x21000 - 0x2F7FF, 0x31000 - 0x3F7FF
+;nCERAM = /nCESHM + /nCEROM + IOP
+/nCERAM = nCESHM * nCEROM * /IOP
+
+; Mail Box : 0x?0042 (?=0, 1, 2)
+; MBINT is read at the rising edge of nWR and is cleared when nMBINTA is asserted (active low).
+;;nMBINT = A15 + A14 + A13 + A12 + A11 + A10 + A9 + A8 + A7 + /A6 + A5 + A4 + A3 + A2 + /A1 + nWR + IOP
+;nMBINT = A15 + A14 + A13 + A12 + A11 + A10 + A9 + A8 + A7 + /A6 + A5 + A4 + A3 + A2 + /A1 + nWR
+;nMBINT.R = A15 + A14 + A13 + A12 + A11 + A10 + A9 + A8 + A7 + /A6 + A5 + A4 + A3 + A2 + /A1 + IOP
+;/nMBINT.R = /A15 * /A14 * /A13 * /A12 * /A11 * /A10 * /A9 * /A8 * /A7 * A6 * /A5 * /A4 * /A3 * /A2 * A1 * /IOP
+/nMBINT.R = /nCESHM * /A11 * /A10 * /A9 * /A8 * /A7 * A6 * /A5 * /A4 * /A3 * /A2 * A1
+;;/nMBINT.R = /nCESHM * /A11 * /A10 * /A9 * /A8 * /A7 * A6 * /A5 * /A4 * /A3 * /A2 * /A1
+AR = /nMBINTA
+
+DESCRIPTION
+
+These equations are used for implementing the address decoder for MN1613 CPU Board

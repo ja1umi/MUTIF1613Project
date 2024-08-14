@@ -1,0 +1,288 @@
+ AS V1.42 Beta [Bld 228] - Source File rom.asm - Page 1 - 07/30/2024 04:04:32 PM
+
+
+       1/       0 :                     ;;;
+       2/       0 :                     ;;; Firmware for MN1613 board
+       3/       0 :                     ;;;
+       4/       0 :                     
+       5/       0 :                     			CPU		MN1613
+       6/       0 :                     
+       7/       0 : =X'F800'             ROM_START:	EQU		X'F800'
+       8/       0 : =X'42'               MBOX:		EQU		X'0042'
+       9/       0 : =X'42'               RESULT: 	EQU		MBOX
+      10/       0 : =X'1000'             RAMLOC: 	EQU		X'1000'
+      11/       0 : =X'FFF'              STACK:		EQU		X'0FFF' 
+      12/       0 :                     
+      13/    F800 :                     			ORG		ROM_START
+      14/    F800 :                     
+      15/    F800 : 0000                			DC	0
+      16/    F801 : 0000                			DC	0
+      17/    F802 :                     
+      18/    F802 : 0000                			DC	0
+      19/    F803 : F842                JVEC_ROM:	DC	ROM_PROG
+      20/    F804 :                     
+      21/    F804 : 0000                			DC	0
+      22/    F805 : F848                JVEC2_ROM:	DC	ROM_PROG2
+      23/    F806 :                     
+      24/    F806 : 0000                			DC	0
+      25/    F807 : F854                JVEC3_ROM:	DC	ROM_PROG3
+      26/    F808 :                     
+      27/    F808 : 4116 A09B           C_SQRT2:	DC	1.41421				; useful constants
+      28/    F80A : 4132 43F4           C_PI:		DC	3.14159
+      29/    F80C : 412B 7E13           C_E:		DC	2.71828
+      30/    F80E :                     
+      31/    F80E :                     ENTTABLE:
+      32/    F80E : F813                		DC	INIT
+      33/    F80F : F837                		DC	CONOUT
+      34/    F810 : F85D                		DC	STROUT
+      35/    F811 : F81B                		DC	CONIN
+      36/    F812 : F829                		DC	CONST
+      37/    F813 :                     
+      38/    F813 :                     ;
+      39/    F813 :                     ;			CELESTE Board Console Driver
+      40/    F813 :                     ;
+      41/    F813 :                     			INCLUDE	"./dev_celeste.asm"
+(1)    1/    F813 :                     ;;;
+(1)    2/    F813 :                     ;;; 	CELESTE Board Console Driver
+(1)    3/    F813 :                     ;;;
+(1)    4/    F813 :                     
+(1)    5/    F813 :                     	INCLUDE	"./celeste.inc"
+(2)    1/    F813 :                     ;;; -*- asm -*-
+(2)    2/    F813 :                     ;;;
+(2)    3/    F813 :                     ;;; CELSTE Board : Definitions
+(2)    4/    F813 :                     ;;;
+(2)    5/    F813 :                     
+(2)    6/    F813 :                     	RELAXED	ON
+(2)    7/    F813 :                     
+(2)    8/    F813 : =X'40'               SMBASE:	EQU	X'0040'
+(2)    9/    F813 :                     
+(2)   10/    F813 :                     ;;;
+(2)   11/    F813 :                     ;;; Offset
+(2)   12/    F813 :                     ;;;
+(2)   13/    F813 :                     
+(2)   14/    F813 : =X'0'                CO_SIG:	EQU	0		; Signature
+ AS V1.42 Beta [Bld 228] - Source File rom.asm(celeste.inc) - Page 2 - 07/30/2024 04:04:32 PM
+
+
+(2)   15/    F813 : =X'1'                CO_CMD:	EQU	1		; Command	(n.b. 2 for Emily board)
+(2)   16/    F813 : =X'2'                CO_HSK:	EQU	2		; Handshake	(n.b. 1 for Emily board)
+(2)   17/    F813 : =X'3'                CO_STS:	EQU	3		; Status
+(2)   18/    F813 : =X'4'                CO_DAT:	EQU	4		; Data[0]-[11]
+(2)   19/    F813 :                     
+(2)   20/    F813 :                     ;;;
+(2)   21/    F813 :                     ;;; Signature
+(2)   22/    F813 :                     ;;;
+(2)   23/    F813 :                     
+(2)   24/    F813 : =X'A5'               CG_SIG:	EQU	0xA5
+(2)   25/    F813 :                     
+(2)   26/    F813 :                     ;;;
+(2)   27/    F813 :                     ;;; Handshake
+(2)   28/    F813 :                     ;;;
+(2)   29/    F813 :                     
+(2)   30/    F813 : =X'CC'               CH_REQ:	EQU	0xCC
+(2)   31/    F813 : =X'33'               CH_ACK:	EQU	0x33
+(2)   32/    F813 :                     
+(2)   33/    F813 :                     ;;;
+(2)   34/    F813 :                     ;;; Command
+(2)   35/    F813 :                     ;;;
+(2)   36/    F813 :                     
+(2)   37/    F813 : =X'0'                CC_INI:	EQU	0x00		; Init
+(2)   38/    F813 : =X'1'                CC_COT:	EQU	0x01		; Console Output
+(2)   39/    F813 : =X'2'                CC_CIN:	EQU	0x02		; Console Input
+(2)   40/    F813 : =X'3'                CC_CST:	EQU	0x03		; Console Status
+(2)   41/    F813 :                     
+(2)   42/    F813 :                     ;;;
+(2)   43/    F813 :                     ;;; Status
+(2)   44/    F813 :                     ;;;
+(2)   45/    F813 :                     
+(2)   46/    F813 : =X'0'                CS_OK:	EQU	0x00		; OK
+(2)   47/    F813 : =X'FF'               CS_UK:	EQU	0xFF		; Unknown Command
+(2)   48/    F813 :                     
+(2)   49/    F813 :                     	RELAXED	OFF
+(2)   50/    F813 :                     
+(1)    6/    F813 :                     
+(1)    7/    F813 :                     INIT:
+(1)    8/    F813 : 0800                	MVI	R0,X'00'
+(1)    9/    F814 : 8042                	ST	R0,SMBASE+CO_HSK
+(1)   10/    F815 : 8041                	ST	R0,SMBASE+CO_CMD ; Command
+(1)   11/    F816 :                     
+(1)   12/    F816 : 08A5                	MVI	R0,CG_SIG
+(1)   13/    F817 : 8040                	ST	R0,SMBASE+CO_SIG ; Signature
+(1)   14/    F818 :                     
+(1)   15/    F818 : 08CC                	MVI	R0,CH_REQ
+(1)   16/    F819 : 8042                	ST	R0,SMBASE+CO_HSK ; Handshake
+(1)   17/    F81A :                     
+(1)   18/    F81A : 2003                	RET
+(1)   19/    F81B :                     
+(1)   20/    F81B :                     CONIN:
+(1)   21/    F81B : C042                	L	R0,SMBASE+CO_HSK
+(1)   22/    F81C : 09CC                	MVI	R1,CH_REQ
+(1)   23/    F81D : 5051                	CB	R0,R1,NZ
+(1)   24/    F81E : CFFD                	B	CONIN
+(1)   25/    F81F :                     
+(1)   26/    F81F : 0802                	MVI	R0,CC_CIN
+(1)   27/    F820 : 8041                	ST	R0,SMBASE+CO_CMD
+(1)   28/    F821 :                     
+(1)   29/    F821 : 8142                	ST	R1,SMBASE+CO_HSK
+ AS V1.42 Beta [Bld 228] - Source File rom.asm(dev_celeste.asm) - Page 3 - 07/30/2024 04:04:32 PM
+
+
+(1)   30/    F822 :                     CIN0:
+(1)   31/    F822 : C042                	L	R0,SMBASE+CO_HSK
+(1)   32/    F823 : 5051                	CB	R0,R1,NZ
+(1)   33/    F824 : CFFE                	B	CIN0
+(1)   34/    F825 :                     
+(1)   35/    F825 : C044                	L	R0,SMBASE+CO_DAT
+(1)   36/    F826 : 680F 00FF           	ANDI	R0, X'00FF'
+(1)   37/    F828 :                     	
+(1)   38/    F828 : 2003                	RET
+(1)   39/    F829 :                     
+(1)   40/    F829 :                     CONST:
+(1)   41/    F829 : C042                	L	R0,SMBASE+CO_HSK
+(1)   42/    F82A : 09CC                	MVI	R1,CH_REQ
+(1)   43/    F82B : 5051                	CB	R0,R1,NZ
+(1)   44/    F82C : CFFD                	B	CONST
+(1)   45/    F82D :                     
+(1)   46/    F82D : 0803                	MVI	R0,CC_CST	; CONST Command
+(1)   47/    F82E : 8041                	ST	R0,SMBASE+CO_CMD
+(1)   48/    F82F :                     
+(1)   49/    F82F : 8142                	ST	R1,SMBASE+CO_HSK
+(1)   50/    F830 :                     CST0:
+(1)   51/    F830 : C042                	L	R0,SMBASE+CO_HSK
+(1)   52/    F831 : 5051                	CB	R0,R1,NZ
+(1)   53/    F832 : CFFE                	B	CST0
+(1)   54/    F833 :                     
+(1)   55/    F833 : C044                	L	R0,SMBASE+CO_DAT
+(1)   56/    F834 : 680F 00FF           	ANDI	R0, X'00FF'
+(1)   57/    F836 :                     
+(1)   58/    F836 : 2003                	RET
+(1)   59/    F837 :                     
+(1)   60/    F837 :                     CONOUT:
+(1)   61/    F837 : 2001                	PUSH	R0
+(1)   62/    F838 :                     COUT0:
+(1)   63/    F838 : C042                	L	R0,SMBASE+CO_HSK
+(1)   64/    F839 : 09CC                	MVI	R1,CH_REQ
+(1)   65/    F83A : 5051                	CB	R0,R1,NZ
+(1)   66/    F83B : CFFD                	B	COUT0
+(1)   67/    F83C :                     
+(1)   68/    F83C : 0801                	MVI	R0,CC_COT	; CONOUT Command
+(1)   69/    F83D : 8041                	ST	R0,SMBASE+CO_CMD
+(1)   70/    F83E :                     
+(1)   71/    F83E : 2002                	POP	R0
+(1)   72/    F83F : 8044                	ST	R0,SMBASE+CO_DAT
+(1)   73/    F840 :                     
+(1)   74/    F840 : 8142                	ST	R1,SMBASE+CO_HSK
+(1)   75/    F841 :                     
+(1)   76/    F841 : 2003                	RET
+(1)   77/    F842 :                     
+      42/    F842 :                     
+      43/    F842 :                     ;
+      44/    F842 :                     ; test program starts here
+      45/    F842 :                     ;
+      46/    F842 :                     ROM_PROG:
+      47/    F842 : 780F AA55           			MVWI	R0, X'AA55'
+      48/    F844 : 8042                			ST		R0, RESULT
+      49/    F845 : 2748 1000           			STD		R0, RAMLOC
+      50/    F847 : CFFB                			B		ROM_PROG
+      51/    F848 :                     
+      52/    F848 :                     ROM_PROG2:
+      53/    F848 : 0800                			MVI		R0, 0
+ AS V1.42 Beta [Bld 228] - Source File rom.asm - Page 4 - 07/30/2024 04:04:32 PM
+
+
+      54/    F849 : 8042                			ST		R0, RESULT
+      55/    F84A : 2748 1000           			STD		R0, RAMLOC
+      56/    F84C : 090A                			MVI		R1, 10
+      57/    F84D : 5809                -			A		R0, R1
+      58/    F84E : 4141                			SI		R1, 1, Z
+      59/    F84F : CFFE                			B		-
+      60/    F850 : 8042                			ST		R0, RESULT	 	; calculate the sum from 1 to 10 and put the result
+      61/    F851 : 2748 1000           			STD		R0, RAMLOC
+      62/    F853 : CFF5                			B		ROM_PROG2
+      63/    F854 :                     
+      64/    F854 :                     ROM_PROG3:
+      65/    F854 : 7D0F 0FFF           			MVWI	SP, STACK
+      66/    F856 : 2617 F813           			BALD	INIT
+      67/    F858 : 7B0F F86D           			MVWI	X0, MSG
+      68/    F85A : 2617 F85D           			BALD	STROUT
+      69/    F85C : CF00                -			B		-
+      70/    F85D :                     
+      71/    F85D :                     STROUT:
+      72/    F85D : E000                			L		R0, 0(X0)
+      73/    F85E : 7008                			BSWP	R0, R0
+      74/    F85F : 685F 00FF           			ANDI	R0, X'00FF', NZ
+      75/    F861 : CF0B                			B		SOUTR
+      76/    F862 : 2617 F837           			BALD	CONOUT
+      77/    F864 : E000                			L		R0, 0(X0)
+      78/    F865 : 685F 00FF           			ANDI	R0, X'00FF', NZ
+      79/    F867 : CF05                			B		SOUTR
+      80/    F868 : 2617 F837           			BALD	CONOUT
+      81/    F86A : 4B01                			AI		X0, 1
+      82/    F86B : CFF2                			B		STROUT
+      83/    F86C : 2003                SOUTR:		RET
+      84/    F86D :                     
+      85/    F86D :                     MSG:
+      86/    F86D : 0D0A 4865 6C6C      	DC	"\r\nHello, MN1613\r\n\0"
+             F870 : 6F2C 204D 4E31 
+             F873 : 3631 330D 0A00    
+      87/    F876 :                     
+      88/    F876 :                     
+ AS V1.42 Beta [Bld 228] - Source File rom.asm - Page 5 - 07/30/2024 04:04:32 PM
+
+
+  Symbol Table (* = unused):
+  --------------------------
+
+*ARCHITECTURE :                                      "x86_64-unknown-linux" - |
+*CASESENSITIVE :                  0 - |  CC_CIN :                         2 - |
+ CC_COT :                         1 - |  CC_CST :                         3 - |
+*CC_INI :                         0 - |  CG_SIG :                        A5 - |
+*CH_ACK :                        33 - |  CH_REQ :                        CC - |
+ CIN0 :                        F822 C | *COMPMODE :                       0 - |
+ CONIN :                       F81B C |  CONOUT :                      F837 C |
+ CONST :                       F829 C | *CONSTPI :        3.141592653589793 - |
+ COUT0 :                       F838 C |  CO_CMD :                         1 - |
+ CO_DAT :                         4 - |  CO_HSK :                         2 - |
+ CO_SIG :                         0 - | *CO_STS :                         3 - |
+ CST0 :                        F830 C | *CS_OK :                          0 - |
+*CS_UK :                         FF - | *C_E :                         F80C C |
+*C_PI :                        F80A C | *C_SQRT2 :                     F808 C |
+*DATE :                "07/30/2024" - | *ENTTABLE :                    F80E C |
+*FALSE :                          0 - | *FULLPMMU :                       1 - |
+*HAS64 :                          1 - | *HASFPU :                         0 - |
+*HASPMMU :                        0 - |  INIT :                        F813 C |
+*INSUPMODE :                      0 - | *JVEC2_ROM :                   F805 C |
+*JVEC3_ROM :                   F807 C | *JVEC_ROM :                    F803 C |
+*LISTON :                         1 - | *MACEXP :                         7 - |
+ MBOX :                          42 - | *MOMCPU :                      1613 - |
+*MOMCPUNAME :              "MN1613" - |  MSG :                         F86D C |
+*NESTMAX :                      100 - | *PACKING :                        0 - |
+*PADDING :                        1 - |  RAMLOC :                      1000 - |
+*RELAXED :                        0 - |  RESULT :                        42 - |
+ ROM_PROG :                    F842 C |  ROM_PROG2 :                   F848 C |
+ ROM_PROG3 :                   F854 C |  ROM_START :                   F800 - |
+ SMBASE :                        40 - |  SOUTR :                       F86C C |
+ STACK :                        FFF - |  STROUT :                      F85D C |
+*TIME :               "04:04:32 PM" - | *TRUE :                           1 - |
+*VERSION :                     142F - |  __BACK0 :                     F84D C |
+ __BACK1 :                     F85C C |
+
+     64 symbols
+     34 unused symbols
+
+ AS V1.42 Beta [Bld 228] - Source File rom.asm - Page 6 - 07/30/2024 04:04:32 PM
+
+
+  Code Pages:
+  ----------
+
+STANDARD (0 changed characters)
+
+1 code page
+
+0.00 seconds assembly time
+
+    215 lines source file
+      2 passes
+      0 errors
+      0 warnings
