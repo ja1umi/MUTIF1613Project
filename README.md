@@ -1,2 +1,2 @@
 # MUTIF1613Project
-Verious design information related to my home-brewed MN1613 16-bit computer
+This project aims to build a vintage PANAFACOM's 16-bit MN1613-based computer. All the project-related files are available here.
