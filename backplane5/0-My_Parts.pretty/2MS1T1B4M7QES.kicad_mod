@@ -1,0 +1,148 @@
+(footprint "2MS1T1B4M7QES"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at -11.2776 -2.1844 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "d7fae202-174c-4d25-a0ff-05f500719258")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "2MS1T1B4M7QES"
+		(at -6.9088 2.5908 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "a2cceb19-68fb-4208-8556-6c1cd103427c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at -5.08 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "53ab1a6e-d2e8-4787-94e2-cbc076ea6107")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at -5.08 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "bb3abf46-93d9-4763-b2f7-b8c79f607bf5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at -5.08 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3076423a-6ad6-4403-ae57-67c3a0e3c3f6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start -13.1572 -1.27)
+		(end -9.144 1.27)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "1c633570-3e36-4fb7-bc8b-d1d087c04fc7")
+	)
+	(fp_rect
+		(start -9.144 -1.27)
+		(end 6.604 1.27)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "50d36db9-ff1a-4d68-bafb-d79dc7f0bbb1")
+	)
+	(fp_rect
+		(start -13.2588 -1.3716)
+		(end 6.7056 1.3716)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "494cabbb-cba4-45d8-901f-e181d4721cfc")
+	)
+	(fp_text user "${REFERENCE}"
+		(at -6.9088 4.0908 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "3417f202-3618-4b90-8d5b-2a90685bd1c8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.624 1.624)
+		(drill 0.862)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 45)
+		(uuid "2c8062ec-3252-479a-9fd2-c53015b1e1e5")
+	)
+	(pad "2" thru_hole circle
+		(at 2.54 0)
+		(size 1.624 1.624)
+		(drill 0.862)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "cc3a43a5-4a8f-4878-ad77-8d85586c91e2")
+	)
+	(pad "3" thru_hole circle
+		(at 5.08 0)
+		(size 1.624 1.624)
+		(drill 0.862)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d643aa00-03bc-43dc-9b60-4e19dc8a51fe")
+	)
+	(pad "MP" thru_hole circle
+		(at -5.08 0)
+		(size 1.624 1.624)
+		(drill 0.862)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "7f8233cf-7b12-4017-b428-5d112c557b02")
+	)
+)

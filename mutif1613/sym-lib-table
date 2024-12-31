@@ -1,0 +1,7 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "0-My_Parts")(type "KiCad")(uri "${KIPRJMOD}/0-My_Parts.kicad_sym")(options "")(descr ""))
+  (lib (name "ds1232")(type "KiCad")(uri "C:/Users/tgemj/OneDrive/Shared/C105/KiCad8/projects/mutif286/ds1232.kicad_sym")(options "")(descr ""))
+  (lib (name "atf22v10")(type "KiCad")(uri "C:/Users/tgemj/OneDrive/Shared/C105/KiCad8/projects/mutif286/atf22v10.kicad_sym")(options "")(descr ""))
+  (lib (name "at28c16")(type "KiCad")(uri "C:/Users/tgemj/OneDrive/Shared/C105/KiCad8/projects/mutif286/at28c16.kicad_sym")(options "")(descr ""))
+)
